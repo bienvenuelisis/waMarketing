@@ -9,17 +9,42 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-#driver = webdriver.Chrome(executable_path='chromedriver.exe')
-driver = webdriver.Edge(service=webdriver.EdgeService(executable_path='msedgedriver.exe'))
 from selenium.webdriver.support import expected_conditions as EC
 
+print("Choose your prefereed browser : \n 1. Google Chrome \n 2. Microsoft Edge \n")
+print("Your choice : ", end="")
+
+choice = int(input())
+
+driver = None
+
+if choice == 1:
+    driver = webdriver.Chrome(service=webdriver.ChromeService(executable_path='chromedriver.exe'))
+elif choice == 2:
+    driver = webdriver.Edge(service=webdriver.EdgeService(executable_path='msedgedriver.exe'))
+else:
+    print("Invalid choice. Please choose 1 or 2.")
+    exit()
+
+print("Enter the path of your Excel file (XLS, XLSX) : ", end="")
+pathToExcelFile = input()
+
+if pathToExcelFile == "":
+    print("Invalid path. Please provide a valid path.")
+    exit()
+    
+if not pathToExcelFile.endswith('.xlsx') and not pathToExcelFile.endswith('.xls'):
+    print("Invalid file format. Please provide a valid Excel file.")
+    exit()
 
 # Load data from Excel
-data = pd.read_excel('clients.xlsx', sheet_name='Sheet0')
-driver = webdriver.Edge()
+print("Loading data from Excel : " + pathToExcelFile)
+data = pd.read_excel(pathToExcelFile, sheet_name='Sheet0')
+
 
 # Open WhatsApp Web
 driver.get('https://web.whatsapp.com')
+
 input("Press ENTER after logging into WhatsApp Web and when your chats are visible.\n\n\n")
 
 # Loop through the contacts in the Excel file
