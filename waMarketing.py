@@ -9,13 +9,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
+#driver = webdriver.Chrome(executable_path='chromedriver.exe')
+driver = webdriver.Edge(service=webdriver.EdgeService(executable_path='msedgedriver.exe'))
 from selenium.webdriver.support import expected_conditions as EC
 
 
 # Load data from Excel
 data = pd.read_excel('clients.xlsx', sheet_name='Sheet0')
-driver = webdriver.Chrome()
+driver = webdriver.Edge()
 
 # Open WhatsApp Web
 driver.get('https://web.whatsapp.com')
